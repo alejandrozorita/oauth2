@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TestAPP</title>
+</head>
+<body>
+
+<form action="POST">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Contraseña">
+    <input type="submit" id="login" placeholder="Ingresar">
+</form>
+
+
+<script>
+    (function () {
+
+        'use sctrict';
+
+        const clienteId = 1;
+        const clientSecret = 'ZK7D5ItSIkyvvRfKBnbgYi1YePoPH8mNkqLjArZl';
+        const grantType = 'password';
+
+        let login = document.getElementById('login');
+
+        login.addEventListener('click', e => {
+            console.log(clientSecret);
+            console.log(document.getElementById('password').value);
+            e.preventDefault();
+
+            fetch('http://localhost:8080/oauth/token', {
+                method: 'POST',
+                body: JSON.stringify({
+                    client_id: clienteId,
+                    client_secret: clientSecret,
+                    grant_type: grantType,
+                    username: document.getElementById('email').value,
+                    password: document.getElementById('password').value
+                }),
+                headers: {'Content-Type': 'application/json'},
+            })
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => console.log(data))
+        })
+
+    })();
+</script>
+</body>
+</html>
