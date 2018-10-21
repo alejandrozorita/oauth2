@@ -21,3 +21,19 @@ use Illuminate\Http\Request;
     Route::get('posts', function (Request $request) {
         return App\Post::all();
     })->middleware('auth:api');
+    
+    
+    Route::get('/clients/posts', function () {
+        return App\Post::all();
+    })->middleware('client');
+    
+    Route::post('/clients/posts', function (Request $request) {
+
+        App\Post::create([
+            'title' => $request->title,
+            'body' => $request->body,
+        ]);
+        
+        return ['status' => 200];
+        
+    })->middleware('client');
